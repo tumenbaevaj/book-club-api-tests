@@ -1,5 +1,6 @@
 package tests;
 
+import models.registration.BlankUsernameRegistrationResponseModel;
 import models.registration.ExistingUserResponseModel;
 import models.registration.RegistrationBodyModel;
 import models.registration.SuccessfulRegistrationResponseModel;
@@ -7,8 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static tests.TestData.REGISTRATION_EXISTING_USER_ERROR;
-import static tests.TestData.REGISTRATION_IP_REGEXP;
+import static tests.TestData.*;
 
 public class RegistrationTests extends TestBase {
     String username;
@@ -51,6 +51,20 @@ public class RegistrationTests extends TestBase {
 
         String expectedError = REGISTRATION_EXISTING_USER_ERROR;
         String actualError = secondRegistrationResponse.username().get(0);
+        assertThat(actualError).isEqualTo(expectedError);
+    }
+
+    @Test
+    public void blankUsernameRegistrationTest() {
+        RegistrationBodyModel registrationData =
+                new RegistrationBodyModel("", password);
+
+        BlankUsernameRegistrationResponseModel registrationResponse =
+                api.users.registerBlankUsername(registrationData);
+
+        String expectedError = REGISTRATION_BLANK_USERNAME_ERROR;
+        String actualError = registrationResponse.username().get(0);
+
         assertThat(actualError).isEqualTo(expectedError);
     }
 }

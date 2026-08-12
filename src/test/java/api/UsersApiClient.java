@@ -1,5 +1,6 @@
 package api;
 
+import models.registration.BlankUsernameRegistrationResponseModel;
 import models.registration.ExistingUserResponseModel;
 import models.registration.RegistrationBodyModel;
 import models.registration.SuccessfulRegistrationResponseModel;
@@ -28,5 +29,16 @@ public class UsersApiClient {
                 .spec(existingUserRegistrationResponseSpec)
                 .extract()
                 .as(ExistingUserResponseModel.class);
+    }
+
+    public BlankUsernameRegistrationResponseModel registerBlankUsername(RegistrationBodyModel body) {
+        return given(registrationRequestSpec)
+                .body(body)
+                .when()
+                .post("/users/register/")
+                .then()
+                .spec(blankUsernameRegistrationResponseSpec)
+                .extract()
+                .as(BlankUsernameRegistrationResponseModel.class);
     }
 }

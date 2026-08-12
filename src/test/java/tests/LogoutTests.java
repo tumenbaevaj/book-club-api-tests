@@ -1,10 +1,14 @@
 package tests;
 
 import models.login.LoginBodyModel;
+import models.logout.BlankRefreshLogoutResponseModel;
 import models.logout.LogoutBodyModel;
 import models.registration.RegistrationBodyModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static tests.TestData.LOGOUT_BLANK_REFRESH_ERROR;
 
 public class LogoutTests extends TestBase {
     String username;
@@ -28,5 +32,18 @@ public class LogoutTests extends TestBase {
 
         LogoutBodyModel logoutData = new LogoutBodyModel(refreshToken);
         api.auth.logout(logoutData);
+    }
+
+    @Test
+    public void blankRefreshLogoutTest() {
+        LogoutBodyModel logoutData = new LogoutBodyModel("");
+
+        BlankRefreshLogoutResponseModel logoutResponse =
+                api.auth.logoutBlankRefresh(logoutData);
+
+        String expectedError = LOGOUT_BLANK_REFRESH_ERROR;
+        String actualError = logoutResponse.refresh().get(0);
+
+        assertThat(actualError).isEqualTo(expectedError);
     }
 }

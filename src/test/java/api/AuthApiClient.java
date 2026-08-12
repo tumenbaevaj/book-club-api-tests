@@ -1,15 +1,16 @@
 package api;
 
 import io.qameta.allure.Step;
+import models.login.BlankPasswordLoginResponseModel;
 import models.login.LoginBodyModel;
 import models.login.SuccessfulLoginResponseModel;
 import models.login.WrongCredentialsLoginResponseModel;
+import models.logout.BlankRefreshLogoutResponseModel;
 import models.logout.LogoutBodyModel;
 
 import static io.restassured.RestAssured.given;
 import static specs.login.LoginSpec.*;
-import static specs.logout.LogoutSpec.logoutRequestSpec;
-import static specs.logout.LogoutSpec.successfulLogoutResponseSpec;
+import static specs.logout.LogoutSpec.*;
 
 public class AuthApiClient {
     public SuccessfulLoginResponseModel login(LoginBodyModel loginBody) {
@@ -54,5 +55,27 @@ public class AuthApiClient {
                 .post("/auth/logout/")
                 .then()
                 .spec(successfulLogoutResponseSpec);
+    }
+
+    public BlankPasswordLoginResponseModel loginBlankPassword(LoginBodyModel loginBody) {
+        return given(loginRequestSpec)
+                .body(loginBody)
+                .when()
+                .post("/auth/token/")
+                .then()
+                .spec(blankPasswordLoginResponseSpec)
+                .extract()
+                .as(BlankPasswordLoginResponseModel.class);
+    }
+
+    public BlankRefreshLogoutResponseModel logoutBlankRefresh(LogoutBodyModel logoutBody) {
+        return given(logoutRequestSpec)
+                .body(logoutBody)
+                .when()
+                .post("/auth/logout/")
+                .then()
+                .spec(blankRefreshLogoutResponseSpec)
+                .extract()
+                .as(BlankRefreshLogoutResponseModel.class);
     }
 }
