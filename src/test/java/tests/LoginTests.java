@@ -3,16 +3,31 @@ package tests;
 import models.login.LoginBodyModel;
 import models.login.SuccessfulLoginResponseModel;
 import models.login.WrongCredentialsLoginResponseModel;
+import models.registration.RegistrationBodyModel;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static tests.TestData.*;
 
 public class LoginTests extends TestBase {
+    String username;
+    String password;
+
+    @BeforeEach
+    public void prepareTestData() {
+        username = "user_" + System.currentTimeMillis();
+        password = "pass_" + System.currentTimeMillis();
+
+        RegistrationBodyModel registrationData =
+                new RegistrationBodyModel(username, password);
+
+        api.users.register(registrationData);
+    }
 
     @Test
     public void successfulLoginTest() {
-        LoginBodyModel loginData = new LoginBodyModel(LOGIN_USERNAME, LOGIN_PASSWORD);
+        LoginBodyModel loginData = new LoginBodyModel(username, password);
 
         SuccessfulLoginResponseModel loginResponse = api.auth.login(loginData);
 
@@ -25,7 +40,7 @@ public class LoginTests extends TestBase {
 
     @Test
     public void wrongCredentialsLoginTest() {
-        LoginBodyModel loginData = new LoginBodyModel(LOGIN_USERNAME, LOGIN_WRONG_PASSWORD);
+        LoginBodyModel loginData = new LoginBodyModel(username, LOGIN_WRONG_PASSWORD);
 
         WrongCredentialsLoginResponseModel loginResponse = api.auth.loginWrongCredentials(loginData);
 
