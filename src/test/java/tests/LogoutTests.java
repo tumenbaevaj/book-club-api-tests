@@ -19,8 +19,7 @@ public class LogoutTests extends TestBase {
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
 
-        RegistrationBodyModel registrationData =
-                new RegistrationBodyModel(username, password);
+        RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
 
         api.users.register(registrationData);
     }

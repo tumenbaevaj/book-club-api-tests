@@ -20,8 +20,7 @@ public class LoginTests extends TestBase {
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
 
-        RegistrationBodyModel registrationData =
-                new RegistrationBodyModel(username, password);
+        RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
 
         api.users.register(registrationData);
     }
@@ -43,7 +42,8 @@ public class LoginTests extends TestBase {
     public void wrongCredentialsLoginTest() {
         LoginBodyModel loginData = new LoginBodyModel(username, LOGIN_WRONG_PASSWORD);
 
-        WrongCredentialsLoginResponseModel loginResponse = api.auth.loginWrongCredentials(loginData);
+        WrongCredentialsLoginResponseModel loginResponse =
+                api.auth.loginWrongCredentials(loginData);
 
         String expectedDetailError = LOGIN_WRONG_CREDENTIALS_ERROR;
         String actualDetailError = loginResponse.detail();
@@ -54,8 +54,7 @@ public class LoginTests extends TestBase {
     public void blankPasswordLoginTest() {
         LoginBodyModel loginData = new LoginBodyModel(username, "");
 
-        BlankPasswordLoginResponseModel loginResponse =
-                api.auth.loginBlankPassword(loginData);
+        BlankPasswordLoginResponseModel loginResponse = api.auth.loginBlankPassword(loginData);
 
         String expectedError = LOGIN_BLANK_PASSWORD_ERROR;
         String actualError = loginResponse.password().get(0);
