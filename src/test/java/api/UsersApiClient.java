@@ -7,12 +7,13 @@ import models.registration.SuccessfulRegistrationResponseModel;
 import models.user.*;
 
 import static io.restassured.RestAssured.given;
+import static specs.BaseSpec.baseRequestSpec;
 import static specs.registration.RegistrationSpec.*;
 import static specs.user.UpdateUserSpec.*;
 
 public class UsersApiClient {
     public SuccessfulRegistrationResponseModel register(RegistrationBodyModel body) {
-        return given(registrationRequestSpec)
+        return given(baseRequestSpec)
                 .body(body)
                 .when()
                 .post("/users/register/")
@@ -23,7 +24,7 @@ public class UsersApiClient {
     }
 
     public ExistingUserResponseModel registerExistingUser(RegistrationBodyModel body) {
-        return given(registrationRequestSpec)
+        return given(baseRequestSpec)
                 .body(body)
                 .when()
                 .post("/users/register/")
@@ -34,7 +35,7 @@ public class UsersApiClient {
     }
 
     public BlankUsernameRegistrationResponseModel registerBlankUsername(RegistrationBodyModel body) {
-        return given(registrationRequestSpec)
+        return given(baseRequestSpec)
                 .body(body)
                 .when()
                 .post("/users/register/")
@@ -45,7 +46,7 @@ public class UsersApiClient {
     }
 
     public UpdateUserResponseModel updateUserPut(UpdateUserBodyModel body, String accessToken) {
-        return given(updateUserRequestSpec)
+        return given(baseRequestSpec)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(body)
                 .when()
@@ -57,7 +58,7 @@ public class UsersApiClient {
     }
 
     public UpdateUserResponseModel updateUserPatch(PatchUserBodyModel body, String accessToken) {
-        return given(updateUserRequestSpec)
+        return given(baseRequestSpec)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(body)
                 .when()
@@ -71,7 +72,7 @@ public class UsersApiClient {
     public InvalidPutUpdateUserResponseModel updateUserPutInvalid(InvalidPutUpdateUserBodyModel body,
                                                                   String accessToken) {
 
-        return given(updateUserRequestSpec)
+        return given(baseRequestSpec)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(body)
                 .when()

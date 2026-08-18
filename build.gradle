@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'io.qameta.allure' version '2.12.0'
-    id 'io.freefair.lombok' version "9.2.0"
+    id 'io.freefair.lombok' version '9.2.0'
 
 }
 
@@ -36,7 +36,7 @@ dependencies {
             "tools.jackson.core:jackson-databind:3.1.0",
             "net.datafaker:datafaker:2.5.4",
             "org.assertj:assertj-core:3.27.7",
-            "org.junit.jupiter:junit-jupiter:5.14.3",
+            "org.junit.jupiter:junit-jupiter:$junitVersion",
             "org.slf4j:slf4j-simple:$slf4jVersion"
     )
 }
