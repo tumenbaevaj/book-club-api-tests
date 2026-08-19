@@ -108,4 +108,30 @@ public class UpdateUserTests extends TestBase {
         assertThat(updateResponse.email().get(0))
                 .isEqualTo("This field is required.");
     }
+
+    @Test
+    public void successfulGetCurrentUserTest() {
+        LoginBodyModel loginData = new LoginBodyModel(username, password);
+
+        SuccessfulLoginResponseModel loginResponse = api.auth.login(loginData);
+
+        String accessToken = loginResponse.access();
+
+        UpdateUserResponseModel userResponse =
+                api.users.getCurrentUser(accessToken);
+
+        assertThat(userResponse.id()).isGreaterThan(0);
+        assertThat(userResponse.username()).isEqualTo(username);
+    }
+
+    @Test
+    public void successfulDeleteCurrentUserTest() {
+        LoginBodyModel loginData = new LoginBodyModel(username, password);
+
+        SuccessfulLoginResponseModel loginResponse = api.auth.login(loginData);
+
+        String accessToken = loginResponse.access();
+
+        api.users.deleteCurrentUser(accessToken);
+    }
 }

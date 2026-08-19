@@ -54,11 +54,10 @@ public class LoginTests extends TestBase {
     public void blankPasswordLoginTest() {
         LoginBodyModel loginData = new LoginBodyModel(username, "");
 
-        BlankPasswordLoginResponseModel loginResponse = api.auth.loginBlankPassword(loginData);
+        BlankPasswordLoginResponseModel loginResponse =
+                api.auth.loginBlankPassword(loginData);
 
-        String expectedError = LOGIN_BLANK_PASSWORD_ERROR;
-        String actualError = loginResponse.password().get(0);
-
-        assertThat(actualError).isEqualTo(expectedError);
+        assertThat(loginResponse.password().get(0))
+                .isEqualTo("This field may not be blank.");
     }
 }

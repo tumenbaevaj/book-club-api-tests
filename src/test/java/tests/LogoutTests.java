@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static tests.TestData.LOGOUT_BLANK_REFRESH_ERROR;
 
 public class LogoutTests extends TestBase {
+
     String username;
     String password;
 
@@ -19,7 +20,8 @@ public class LogoutTests extends TestBase {
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
 
-        RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
+        RegistrationBodyModel registrationData =
+                new RegistrationBodyModel(username, password);
 
         api.users.register(registrationData);
     }
@@ -27,15 +29,20 @@ public class LogoutTests extends TestBase {
     @Test
     public void successfulLogoutTest() {
         LoginBodyModel loginData = new LoginBodyModel(username, password);
-        String refreshToken = api.auth.loginAndGetRefreshToken(loginData);
 
-        LogoutBodyModel logoutData = new LogoutBodyModel(refreshToken);
+        String refreshToken =
+                api.auth.loginAndGetRefreshToken(loginData);
+
+        LogoutBodyModel logoutData =
+                new LogoutBodyModel(refreshToken);
+
         api.auth.logout(logoutData);
     }
 
     @Test
     public void blankRefreshLogoutTest() {
-        LogoutBodyModel logoutData = new LogoutBodyModel("");
+        LogoutBodyModel logoutData =
+                new LogoutBodyModel("");
 
         BlankRefreshLogoutResponseModel logoutResponse =
                 api.auth.logoutBlankRefresh(logoutData);

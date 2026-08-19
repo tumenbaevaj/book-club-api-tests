@@ -27,4 +27,16 @@ public class UpdateUserSpec {
             .expectBody("lastName", notNullValue())
             .expectBody("email", notNullValue())
             .build();
+
+    public static ResponseSpecification successfulGetUserResponseSpec = new ResponseSpecBuilder()
+            .log(ALL)
+            .expectStatusCode(200)
+            .expectBody("id", notNullValue())
+            .expectBody("username", notNullValue())
+            .build();
+
+    public static ResponseSpecification successfulDeleteUserResponseSpec = new ResponseSpecBuilder()
+            .log(ALL)
+            .expectStatusCode(204)
+            .build();
 }

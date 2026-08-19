@@ -82,4 +82,24 @@ public class UsersApiClient {
                 .extract()
                 .as(InvalidPutUpdateUserResponseModel.class);
     }
+
+    public UpdateUserResponseModel getCurrentUser(String accessToken) {
+        return given(baseRequestSpec)
+                .header("Authorization", "Bearer " + accessToken)
+                .when()
+                .get("/users/me/")
+                .then()
+                .spec(successfulGetUserResponseSpec)
+                .extract()
+                .as(UpdateUserResponseModel.class);
+    }
+
+    public void deleteCurrentUser(String accessToken) {
+        given(baseRequestSpec)
+                .header("Authorization", "Bearer " + accessToken)
+                .when()
+                .delete("/users/me/")
+                .then()
+                .spec(successfulDeleteUserResponseSpec);
+    }
 }
