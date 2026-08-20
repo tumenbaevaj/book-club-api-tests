@@ -25,7 +25,6 @@ public class AuthApiClient {
                 .as(SuccessfulLoginResponseModel.class);
     }
 
-    @Step("Авторизация и получение токена")
     public String loginAndGetRefreshToken(LoginBodyModel loginBody) {
         return given(baseRequestSpec)
                 .body(loginBody)
@@ -48,7 +47,6 @@ public class AuthApiClient {
                 .as(WrongCredentialsLoginResponseModel.class);
     }
 
-    @Step("Отправка запроса logout")
     public void logout(LogoutBodyModel logoutBody) {
         given(baseRequestSpec)
                 .body(logoutBody)
