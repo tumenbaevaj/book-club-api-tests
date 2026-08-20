@@ -54,6 +54,8 @@ clean test
 
 Allure Report is used to display API test execution results, test steps, requests and responses.
 
+![Allure Report](media/allure-report.jpg)
+
 ## Repository
 
 GitHub repository:  
