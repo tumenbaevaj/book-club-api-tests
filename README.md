@@ -1,8 +1,21 @@
-# Book Club API Tests
+# API Autotests for Book Club
 
-This project is designed for automated API testing of the **Book Club** service.
+This project is designed to automate API testing of the **Book Club** service.
 
-## Technology Stack
+## Test Coverage
+
+The project includes automated API tests for:
+
+- user registration;
+- user login;
+- user logout;
+- getting current user information;
+- updating user information using PUT;
+- updating user information using PATCH;
+- deleting current user;
+- negative validation scenarios.
+
+## Technologies
 
 - Java
 - Gradle
@@ -14,41 +27,34 @@ This project is designed for automated API testing of the **Book Club** service.
 - Allure REST Assured
 - JSON Schema Validation
 - Datafaker
-- Jenkins
 
-## Test Coverage
+## Running the Tests
 
-The project includes automated API tests for:
-
-- User registration
-- User login
-- User logout
-- Getting current user information
-- Updating user information with PUT
-- Updating user information with PATCH
-- Deleting current user
-- Negative validation scenarios
-
-## Run Tests
-
-Run the tests with:
+The following command is used to run the tests locally:
 
 ```bash
 ./gradlew clean test
 ```
 
-## Allure Report
+## Remote Test Execution in Jenkins
 
-To generate and open the Allure report locally:
+The project is configured for automated test execution in Jenkins.
+
+![Jenkins Build](media/jenkins.jpg)
+
+The following command is used to run the tests in Jenkins:
 
 ```bash
-./gradlew allureServe
+clean test
 ```
 
-## Jenkins
+## Integrations
 
-The project is integrated with Jenkins for automated test execution and Allure report generation.
+### Allure Report
 
-## Author
+Allure Report is used to display API test execution results, test steps, requests and responses.
 
-**Jibek Tumenbaeva**
+## Repository
+
+GitHub repository:  
+https://github.com/tumenbaevaj/book-club-api-tests

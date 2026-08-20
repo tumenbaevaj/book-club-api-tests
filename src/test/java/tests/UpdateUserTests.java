@@ -6,8 +6,10 @@ import models.registration.RegistrationBodyModel;
 import models.user.*;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UpdateUserTests extends TestBase {
@@ -19,19 +21,24 @@ public class UpdateUserTests extends TestBase {
 
     @BeforeEach
     public void prepareTestData() {
+
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
 
         RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
 
-        api.users.register(registrationData);
+        step("Register user", () ->
+                api.users.register(registrationData));
     }
 
     @Test
+    @DisplayName("Successful user update with PUT")
     public void successfulPutUpdateUserTest() {
+
         LoginBodyModel loginData = new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = api.auth.login(loginData);
+        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
+                api.auth.login(loginData));
 
         String accessToken = loginResponse.access();
 
@@ -49,24 +56,27 @@ public class UpdateUserTests extends TestBase {
                         email
                 );
 
-        UpdateUserResponseModel updateResponse =
-                api.users.updateUserPut(updateData, accessToken);
+        UpdateUserResponseModel updateResponse = step("Update user with PUT", () ->
+                api.users.updateUserPut(updateData, accessToken));
 
-        assertThat(updateResponse.id()).isGreaterThan(0);
-        assertThat(updateResponse.username()).isEqualTo(updatedUsername);
-        assertThat(updateResponse.firstName()).isEqualTo(firstName);
-        assertThat(updateResponse.lastName()).isEqualTo(lastName);
-        assertThat(updateResponse.email()).isEqualTo(email);
-        assertThat(updateResponse.remoteAddr()).isNotBlank();
+        step("Check updated user data", () -> {
+            assertThat(updateResponse.id()).isGreaterThan(0);
+            assertThat(updateResponse.username()).isEqualTo(updatedUsername);
+            assertThat(updateResponse.firstName()).isEqualTo(firstName);
+            assertThat(updateResponse.lastName()).isEqualTo(lastName);
+            assertThat(updateResponse.email()).isEqualTo(email);
+            assertThat(updateResponse.remoteAddr()).isNotBlank();
+        });
     }
 
     @Test
+    @DisplayName("Successful user update with PATCH")
     public void successfulPatchUpdateUserTest() {
-        LoginBodyModel loginData =
-                new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse =
-                api.auth.login(loginData);
+        LoginBodyModel loginData = new LoginBodyModel(username, password);
+
+        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
+                api.auth.login(loginData));
 
         String accessToken = loginResponse.access();
 
@@ -74,22 +84,26 @@ public class UpdateUserTests extends TestBase {
 
         PatchUserBodyModel patchData = new PatchUserBodyModel(firstName);
 
-        UpdateUserResponseModel updateResponse =
-                api.users.updateUserPatch(patchData, accessToken);
+        UpdateUserResponseModel updateResponse = step("Update user with PATCH", () ->
+                api.users.updateUserPatch(patchData, accessToken));
 
-        assertThat(updateResponse.id()).isGreaterThan(0);
-        assertThat(updateResponse.username()).isEqualTo(username);
-        assertThat(updateResponse.firstName()).isEqualTo(firstName);
-        assertThat(updateResponse.lastName()).isEqualTo("");
-        assertThat(updateResponse.email()).isEqualTo("");
-        assertThat(updateResponse.remoteAddr()).isNotBlank();
+        step("Check patched user data", () -> {
+            assertThat(updateResponse.id()).isGreaterThan(0);
+            assertThat(updateResponse.username()).isEqualTo(username);
+            assertThat(updateResponse.firstName()).isEqualTo(firstName);
+            assertThat(updateResponse.lastName()).isEqualTo("");
+            assertThat(updateResponse.email()).isEqualTo("");
+            assertThat(updateResponse.remoteAddr()).isNotBlank();
+        });
     }
 
     @Test
+    @DisplayName("Successful user update with PATCH")
     public void invalidPutUpdateUserTest() {
         LoginBodyModel loginData = new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = api.auth.login(loginData);
+        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
+                api.auth.login(loginData));
 
         String accessToken = loginResponse.access();
 
@@ -97,41 +111,49 @@ public class UpdateUserTests extends TestBase {
 
         InvalidPutUpdateUserBodyModel updateData = new InvalidPutUpdateUserBodyModel(updatedUsername);
 
-        InvalidPutUpdateUserResponseModel updateResponse = api.users.updateUserPutInvalid(updateData, accessToken);
+        InvalidPutUpdateUserResponseModel updateResponse = step("Update user with invalid PUT data", () ->
+                api.users.updateUserPutInvalid(updateData, accessToken));
 
-        assertThat(updateResponse.firstName().get(0))
-                .isEqualTo("This field is required.");
+        step("Check validation errors", () -> {
+            assertThat(updateResponse.firstName().get(0)).isEqualTo("This field is required.");
 
-        assertThat(updateResponse.lastName().get(0))
-                .isEqualTo("This field is required.");
+            assertThat(updateResponse.lastName().get(0)).isEqualTo("This field is required.");
 
-        assertThat(updateResponse.email().get(0))
-                .isEqualTo("This field is required.");
+            assertThat(updateResponse.email().get(0)).isEqualTo("This field is required.");
+        });
     }
 
     @Test
+    @DisplayName("Get current user")
     public void successfulGetCurrentUserTest() {
         LoginBodyModel loginData = new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = api.auth.login(loginData);
+        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
+                api.auth.login(loginData));
 
         String accessToken = loginResponse.access();
 
-        UpdateUserResponseModel userResponse =
-                api.users.getCurrentUser(accessToken);
+        UpdateUserResponseModel userResponse = step("Get current user", () ->
+                api.users.getCurrentUser(accessToken));
 
-        assertThat(userResponse.id()).isGreaterThan(0);
-        assertThat(userResponse.username()).isEqualTo(username);
+        step("Check current user data", () -> {
+            assertThat(userResponse.id()).isGreaterThan(0);
+            assertThat(userResponse.username()).isEqualTo(username);
+        });
     }
 
     @Test
+    @DisplayName("Delete current user")
     public void successfulDeleteCurrentUserTest() {
+
         LoginBodyModel loginData = new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = api.auth.login(loginData);
+        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
+                api.auth.login(loginData));
 
         String accessToken = loginResponse.access();
 
-        api.users.deleteCurrentUser(accessToken);
+        step("Delete current user", () ->
+                api.users.deleteCurrentUser(accessToken));
     }
 }

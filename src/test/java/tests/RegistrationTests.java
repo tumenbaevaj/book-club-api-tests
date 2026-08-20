@@ -5,66 +5,83 @@ import models.registration.ExistingUserResponseModel;
 import models.registration.RegistrationBodyModel;
 import models.registration.SuccessfulRegistrationResponseModel;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 import static tests.TestData.*;
 
 public class RegistrationTests extends TestBase {
+
     String username;
     String password;
 
     @BeforeEach
     public void prepareTestData() {
-        // генерация данных в тесте => каждый запуск был с новыми пользователями
+
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
     }
 
     @Test
+    @DisplayName("Successful user registration")
     public void successfulRegistrationTest() {
+
         RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
 
-        SuccessfulRegistrationResponseModel registrationResponse =
-                api.users.register(registrationData);
+        SuccessfulRegistrationResponseModel registrationResponse = step("Register user", () ->
+                api.users.register(registrationData));
 
-        assertThat(registrationResponse.id()).isGreaterThan(0);
-        assertThat(registrationResponse.username()).isEqualTo(username);
-        assertThat(registrationResponse.firstName()).isEqualTo("");
-        assertThat(registrationResponse.lastName()).isEqualTo("");
-        assertThat(registrationResponse.email()).isEqualTo("");
-
-        assertThat(registrationResponse.remoteAddr()).matches(REGISTRATION_IP_REGEXP);
+        step("Check registration response", () -> {
+            assertThat(registrationResponse.id()).isGreaterThan(0);
+            assertThat(registrationResponse.username()).isEqualTo(username);
+            assertThat(registrationResponse.firstName()).isEqualTo("");
+            assertThat(registrationResponse.lastName()).isEqualTo("");
+            assertThat(registrationResponse.email()).isEqualTo("");
+            assertThat(registrationResponse.remoteAddr())
+                    .matches(REGISTRATION_IP_REGEXP);
+        });
     }
 
     @Test
+    @DisplayName("Registration of an existing user")
     public void existingUserWrongRegistrationTest() {
+
         RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
 
-        SuccessfulRegistrationResponseModel firstRegistrationResponse =
-                api.users.register(registrationData);
+        SuccessfulRegistrationResponseModel firstRegistrationResponse = step("Register user", () ->
+                api.users.register(registrationData));
 
-        assertThat(firstRegistrationResponse.username()).isEqualTo(username);
+        step("Check first registration", () ->
+                assertThat(firstRegistrationResponse.username()).isEqualTo(username));
 
-        ExistingUserResponseModel secondRegistrationResponse =
-                api.users.registerExistingUser(registrationData);
+        ExistingUserResponseModel secondRegistrationResponse = step("Register existing user", () ->
+                api.users.registerExistingUser(registrationData));
 
-        String expectedError = REGISTRATION_EXISTING_USER_ERROR;
-        String actualError = secondRegistrationResponse.username().get(0);
-        assertThat(actualError).isEqualTo(expectedError);
+        step("Check existing user error", () -> {
+            String expectedError = REGISTRATION_EXISTING_USER_ERROR;
+            String actualError = secondRegistrationResponse.username().get(0);
+
+            assertThat(actualError).isEqualTo(expectedError);
+        });
     }
 
     @Test
+    @DisplayName("Registration with blank username")
     public void blankUsernameRegistrationTest() {
-        RegistrationBodyModel registrationData =
-                new RegistrationBodyModel("", password);
+
+        RegistrationBodyModel registrationData = new RegistrationBodyModel("", password);
 
         BlankUsernameRegistrationResponseModel registrationResponse =
-                api.users.registerBlankUsername(registrationData);
+                step("Register user with blank username", () ->
+                        api.users.registerBlankUsername(registrationData));
 
-        String expectedError = REGISTRATION_BLANK_USERNAME_ERROR;
-        String actualError = registrationResponse.username().get(0);
+        step("Check username validation error", () -> {
+            String expectedError = REGISTRATION_BLANK_USERNAME_ERROR;
+            String actualError = registrationResponse.username().get(0);
 
-        assertThat(actualError).isEqualTo(expectedError);
+            assertThat(actualError).isEqualTo(expectedError);
+        });
     }
 }
