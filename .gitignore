@@ -3,6 +3,7 @@ build/
 gradle/
 !**/src/main/**
 !**/src/test/**
+notifications/config.json
 
 ### IntelliJ IDEA ###
 .idea
