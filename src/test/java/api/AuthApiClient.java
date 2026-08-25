@@ -14,6 +14,7 @@ import static specs.login.LoginSpec.*;
 import static specs.logout.LogoutSpec.*;
 
 public class AuthApiClient {
+    @Step("Login user")
     public SuccessfulLoginResponseModel login(LoginBodyModel loginBody) {
         return given(baseRequestSpec)
                 .body(loginBody)
@@ -25,6 +26,7 @@ public class AuthApiClient {
                 .as(SuccessfulLoginResponseModel.class);
     }
 
+    @Step("Login user and get refresh token")
     public String loginAndGetRefreshToken(LoginBodyModel loginBody) {
         return given(baseRequestSpec)
                 .body(loginBody)
@@ -36,6 +38,7 @@ public class AuthApiClient {
                 .path("refresh");
     }
 
+    @Step("Login with wrong credentials")
     public WrongCredentialsLoginResponseModel loginWrongCredentials(LoginBodyModel loginBody) {
         return given(baseRequestSpec)
                 .body(loginBody)
@@ -47,6 +50,7 @@ public class AuthApiClient {
                 .as(WrongCredentialsLoginResponseModel.class);
     }
 
+    @Step("Logout user")
     public void logout(LogoutBodyModel logoutBody) {
         given(baseRequestSpec)
                 .body(logoutBody)
@@ -56,6 +60,7 @@ public class AuthApiClient {
                 .spec(successfulLogoutResponseSpec);
     }
 
+    @Step("Login with blank password")
     public BlankPasswordLoginResponseModel loginBlankPassword(LoginBodyModel loginBody) {
         return given(baseRequestSpec)
                 .body(loginBody)
@@ -67,6 +72,7 @@ public class AuthApiClient {
                 .as(BlankPasswordLoginResponseModel.class);
     }
 
+    @Step("Logout with blank refresh token")
     public BlankRefreshLogoutResponseModel logoutBlankRefresh(LogoutBodyModel logoutBody) {
         return given(baseRequestSpec)
                 .body(logoutBody)

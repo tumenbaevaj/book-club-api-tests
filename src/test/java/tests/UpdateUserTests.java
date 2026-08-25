@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
+import static tests.TestData.REQUIRED_FIELD_ERROR;
 
 public class UpdateUserTests extends TestBase {
 
@@ -98,7 +99,7 @@ public class UpdateUserTests extends TestBase {
     }
 
     @Test
-    @DisplayName("Successful user update with PATCH")
+    @DisplayName("User update with invalid PUT data")
     public void invalidPutUpdateUserTest() {
         LoginBodyModel loginData = new LoginBodyModel(username, password);
 
@@ -115,11 +116,14 @@ public class UpdateUserTests extends TestBase {
                 api.users.updateUserPutInvalid(updateData, accessToken));
 
         step("Check validation errors", () -> {
-            assertThat(updateResponse.firstName().get(0)).isEqualTo("This field is required.");
+            assertThat(updateResponse.firstName().get(0))
+                    .isEqualTo(REQUIRED_FIELD_ERROR);
 
-            assertThat(updateResponse.lastName().get(0)).isEqualTo("This field is required.");
+            assertThat(updateResponse.lastName().get(0))
+                    .isEqualTo(REQUIRED_FIELD_ERROR);
 
-            assertThat(updateResponse.email().get(0)).isEqualTo("This field is required.");
+            assertThat(updateResponse.email().get(0))
+                    .isEqualTo(REQUIRED_FIELD_ERROR);
         });
     }
 
