@@ -22,28 +22,29 @@ public class UpdateUserTests extends TestBase {
 
     @BeforeEach
     public void prepareTestData() {
-
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
 
-        RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
+        RegistrationBodyModel registrationData =
+                new RegistrationBodyModel(username, password);
 
-        step("Register user", () ->
-                api.users.register(registrationData));
+        api.users.register(registrationData);
     }
 
     @Test
     @DisplayName("Successful user update with PUT")
     public void successfulPutUpdateUserTest() {
 
-        LoginBodyModel loginData = new LoginBodyModel(username, password);
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
-                api.auth.login(loginData));
+        SuccessfulLoginResponseModel loginResponse =
+                api.auth.login(loginData);
 
         String accessToken = loginResponse.access();
 
-        String updatedUsername = "updated_user_" + System.currentTimeMillis();
+        String updatedUsername =
+                "updated_user_" + System.currentTimeMillis();
 
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
@@ -57,8 +58,8 @@ public class UpdateUserTests extends TestBase {
                         email
                 );
 
-        UpdateUserResponseModel updateResponse = step("Update user with PUT", () ->
-                api.users.updateUserPut(updateData, accessToken));
+        UpdateUserResponseModel updateResponse =
+                api.users.updateUserPut(updateData, accessToken);
 
         step("Check updated user data", () -> {
             assertThat(updateResponse.id()).isGreaterThan(0);
@@ -74,19 +75,21 @@ public class UpdateUserTests extends TestBase {
     @DisplayName("Successful user update with PATCH")
     public void successfulPatchUpdateUserTest() {
 
-        LoginBodyModel loginData = new LoginBodyModel(username, password);
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
-                api.auth.login(loginData));
+        SuccessfulLoginResponseModel loginResponse =
+                api.auth.login(loginData);
 
         String accessToken = loginResponse.access();
 
         String firstName = faker.name().firstName();
 
-        PatchUserBodyModel patchData = new PatchUserBodyModel(firstName);
+        PatchUserBodyModel patchData =
+                new PatchUserBodyModel(firstName);
 
-        UpdateUserResponseModel updateResponse = step("Update user with PATCH", () ->
-                api.users.updateUserPatch(patchData, accessToken));
+        UpdateUserResponseModel updateResponse =
+                api.users.updateUserPatch(patchData, accessToken);
 
         step("Check patched user data", () -> {
             assertThat(updateResponse.id()).isGreaterThan(0);
@@ -101,19 +104,23 @@ public class UpdateUserTests extends TestBase {
     @Test
     @DisplayName("User update with invalid PUT data")
     public void invalidPutUpdateUserTest() {
-        LoginBodyModel loginData = new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
-                api.auth.login(loginData));
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, password);
+
+        SuccessfulLoginResponseModel loginResponse =
+                api.auth.login(loginData);
 
         String accessToken = loginResponse.access();
 
-        String updatedUsername = "updated_user_" + System.currentTimeMillis();
+        String updatedUsername =
+                "updated_user_" + System.currentTimeMillis();
 
-        InvalidPutUpdateUserBodyModel updateData = new InvalidPutUpdateUserBodyModel(updatedUsername);
+        InvalidPutUpdateUserBodyModel updateData =
+                new InvalidPutUpdateUserBodyModel(updatedUsername);
 
-        InvalidPutUpdateUserResponseModel updateResponse = step("Update user with invalid PUT data", () ->
-                api.users.updateUserPutInvalid(updateData, accessToken));
+        InvalidPutUpdateUserResponseModel updateResponse =
+                api.users.updateUserPutInvalid(updateData, accessToken);
 
         step("Check validation errors", () -> {
             assertThat(updateResponse.firstName().get(0))
@@ -130,15 +137,17 @@ public class UpdateUserTests extends TestBase {
     @Test
     @DisplayName("Get current user")
     public void successfulGetCurrentUserTest() {
-        LoginBodyModel loginData = new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
-                api.auth.login(loginData));
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, password);
+
+        SuccessfulLoginResponseModel loginResponse =
+                api.auth.login(loginData);
 
         String accessToken = loginResponse.access();
 
-        UpdateUserResponseModel userResponse = step("Get current user", () ->
-                api.users.getCurrentUser(accessToken));
+        UpdateUserResponseModel userResponse =
+                api.users.getCurrentUser(accessToken);
 
         step("Check current user data", () -> {
             assertThat(userResponse.id()).isGreaterThan(0);
@@ -150,14 +159,14 @@ public class UpdateUserTests extends TestBase {
     @DisplayName("Delete current user")
     public void successfulDeleteCurrentUserTest() {
 
-        LoginBodyModel loginData = new LoginBodyModel(username, password);
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
-                api.auth.login(loginData));
+        SuccessfulLoginResponseModel loginResponse =
+                api.auth.login(loginData);
 
         String accessToken = loginResponse.access();
 
-        step("Delete current user", () ->
-                api.users.deleteCurrentUser(accessToken));
+        api.users.deleteCurrentUser(accessToken);
     }
 }

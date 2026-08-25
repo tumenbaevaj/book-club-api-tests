@@ -20,32 +20,37 @@ public class LoginTests extends TestBase {
 
     @BeforeEach
     public void prepareTestData() {
-
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
 
-        RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
+        RegistrationBodyModel registrationData =
+                new RegistrationBodyModel(username, password);
 
-        step("Register user", () ->
-                api.users.register(registrationData));
+        api.users.register(registrationData);
     }
 
     @Test
     @DisplayName("Successful user login")
     public void successfulLoginTest() {
 
-        LoginBodyModel loginData = new LoginBodyModel(username, password);
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, password);
 
-        SuccessfulLoginResponseModel loginResponse = step("Login user", () ->
-                api.auth.login(loginData));
+        SuccessfulLoginResponseModel loginResponse =
+                api.auth.login(loginData);
 
         step("Check login response", () -> {
             String actualAccess = loginResponse.access();
             String actualRefresh = loginResponse.refresh();
 
-            assertThat(actualAccess).startsWith(LOGIN_TOKEN_PREFIX);
-            assertThat(actualRefresh).startsWith(LOGIN_TOKEN_PREFIX);
-            assertThat(actualAccess).isNotEqualTo(actualRefresh);
+            assertThat(actualAccess)
+                    .startsWith(LOGIN_TOKEN_PREFIX);
+
+            assertThat(actualRefresh)
+                    .startsWith(LOGIN_TOKEN_PREFIX);
+
+            assertThat(actualAccess)
+                    .isNotEqualTo(actualRefresh);
         });
     }
 
@@ -53,29 +58,29 @@ public class LoginTests extends TestBase {
     @DisplayName("Login with wrong credentials")
     public void wrongCredentialsLoginTest() {
 
-        LoginBodyModel loginData = new LoginBodyModel(username, LOGIN_WRONG_PASSWORD);
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, LOGIN_WRONG_PASSWORD);
 
-        WrongCredentialsLoginResponseModel loginResponse = step("Login with wrong credentials", () ->
-                api.auth.loginWrongCredentials(loginData));
+        WrongCredentialsLoginResponseModel loginResponse =
+                api.auth.loginWrongCredentials(loginData);
 
-        step("Check error message", () -> {
-            String expectedDetailError = LOGIN_WRONG_CREDENTIALS_ERROR;
-            String actualDetailError = loginResponse.detail();
-
-            assertThat(actualDetailError).isEqualTo(expectedDetailError);
-        });
+        step("Check error message", () ->
+                assertThat(loginResponse.detail())
+                        .isEqualTo(LOGIN_WRONG_CREDENTIALS_ERROR));
     }
 
     @Test
     @DisplayName("Login with blank password")
     public void blankPasswordLoginTest() {
 
-        LoginBodyModel loginData = new LoginBodyModel(username, "");
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, "");
 
-        BlankPasswordLoginResponseModel loginResponse = step("Login with blank password", () ->
-                api.auth.loginBlankPassword(loginData));
+        BlankPasswordLoginResponseModel loginResponse =
+                api.auth.loginBlankPassword(loginData);
 
         step("Check password validation error", () ->
-                assertThat(loginResponse.password().get(0)).isEqualTo("This field may not be blank."));
+                assertThat(loginResponse.password().get(0))
+                        .isEqualTo(LOGIN_BLANK_PASSWORD_ERROR));
     }
 }

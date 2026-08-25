@@ -1,5 +1,8 @@
 package tests;
 
+import models.login.LoginBodyModel;
+import models.logout.BlankRefreshLogoutResponseModel;
+import models.logout.LogoutBodyModel;
 import models.registration.BlankUsernameRegistrationResponseModel;
 import models.registration.ExistingUserResponseModel;
 import models.registration.RegistrationBodyModel;
@@ -19,69 +22,43 @@ public class RegistrationTests extends TestBase {
 
     @BeforeEach
     public void prepareTestData() {
-
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
+
+        RegistrationBodyModel registrationData =
+                new RegistrationBodyModel(username, password);
+
+        api.users.register(registrationData);
     }
 
     @Test
-    @DisplayName("Successful user registration")
-    public void successfulRegistrationTest() {
+    @DisplayName("Successful user logout")
+    public void successfulLogoutTest() {
 
-        RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, password);
 
-        SuccessfulRegistrationResponseModel registrationResponse = step("Register user", () ->
-                api.users.register(registrationData));
+        String refreshToken =
+                api.auth.loginAndGetRefreshToken(loginData);
 
-        step("Check registration response", () -> {
-            assertThat(registrationResponse.id()).isGreaterThan(0);
-            assertThat(registrationResponse.username()).isEqualTo(username);
-            assertThat(registrationResponse.firstName()).isEqualTo("");
-            assertThat(registrationResponse.lastName()).isEqualTo("");
-            assertThat(registrationResponse.email()).isEqualTo("");
-            assertThat(registrationResponse.remoteAddr())
-                    .matches(REGISTRATION_IP_REGEXP);
-        });
+        LogoutBodyModel logoutData =
+                new LogoutBodyModel(refreshToken);
+
+        api.auth.logout(logoutData);
     }
 
     @Test
-    @DisplayName("Registration of an existing user")
-    public void existingUserWrongRegistrationTest() {
+    @DisplayName("Logout with blank refresh token")
+    public void blankRefreshLogoutTest() {
 
-        RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
+        LogoutBodyModel logoutData =
+                new LogoutBodyModel("");
 
-        SuccessfulRegistrationResponseModel firstRegistrationResponse = step("Register user", () ->
-                api.users.register(registrationData));
+        BlankRefreshLogoutResponseModel logoutResponse =
+                api.auth.logoutBlankRefresh(logoutData);
 
-        step("Check first registration", () ->
-                assertThat(firstRegistrationResponse.username()).isEqualTo(username));
-
-        ExistingUserResponseModel secondRegistrationResponse = step("Register existing user", () ->
-                api.users.registerExistingUser(registrationData));
-
-        step("Check existing user error", () -> {
-            String expectedError = REGISTRATION_EXISTING_USER_ERROR;
-            String actualError = secondRegistrationResponse.username().get(0);
-
-            assertThat(actualError).isEqualTo(expectedError);
-        });
-    }
-
-    @Test
-    @DisplayName("Registration with blank username")
-    public void blankUsernameRegistrationTest() {
-
-        RegistrationBodyModel registrationData = new RegistrationBodyModel("", password);
-
-        BlankUsernameRegistrationResponseModel registrationResponse =
-                step("Register user with blank username", () ->
-                        api.users.registerBlankUsername(registrationData));
-
-        step("Check username validation error", () -> {
-            String expectedError = REGISTRATION_BLANK_USERNAME_ERROR;
-            String actualError = registrationResponse.username().get(0);
-
-            assertThat(actualError).isEqualTo(expectedError);
-        });
+        step("Check refresh token validation error", () ->
+                assertThat(logoutResponse.refresh().get(0))
+                        .isEqualTo(LOGOUT_BLANK_REFRESH_ERROR));
     }
 }
