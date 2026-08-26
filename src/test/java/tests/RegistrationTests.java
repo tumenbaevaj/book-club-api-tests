@@ -1,8 +1,5 @@
 package tests;
 
-import models.login.LoginBodyModel;
-import models.logout.BlankRefreshLogoutResponseModel;
-import models.logout.LogoutBodyModel;
 import models.registration.BlankUsernameRegistrationResponseModel;
 import models.registration.ExistingUserResponseModel;
 import models.registration.RegistrationBodyModel;
@@ -24,41 +21,63 @@ public class RegistrationTests extends TestBase {
     public void prepareTestData() {
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
+    }
+
+    @Test
+    @DisplayName("Successful user registration")
+    public void successfulRegistrationTest() {
 
         RegistrationBodyModel registrationData =
                 new RegistrationBodyModel(username, password);
 
-        api.users.register(registrationData);
+        SuccessfulRegistrationResponseModel registrationResponse =
+                api.users.register(registrationData);
+
+        step("Check registration response", () -> {
+            assertThat(registrationResponse.id()).isGreaterThan(0);
+            assertThat(registrationResponse.username()).isEqualTo(username);
+            assertThat(registrationResponse.firstName()).isEqualTo("");
+            assertThat(registrationResponse.lastName()).isEqualTo("");
+            assertThat(registrationResponse.email()).isEqualTo("");
+            assertThat(registrationResponse.remoteAddr())
+                    .matches(REGISTRATION_IP_REGEXP);
+        });
     }
 
     @Test
-    @DisplayName("Successful user logout")
-    public void successfulLogoutTest() {
+    @DisplayName("Registration of an existing user")
+    public void existingUserWrongRegistrationTest() {
 
-        LoginBodyModel loginData =
-                new LoginBodyModel(username, password);
+        RegistrationBodyModel registrationData =
+                new RegistrationBodyModel(username, password);
 
-        String refreshToken =
-                api.auth.loginAndGetRefreshToken(loginData);
+        SuccessfulRegistrationResponseModel firstRegistrationResponse =
+                api.users.register(registrationData);
 
-        LogoutBodyModel logoutData =
-                new LogoutBodyModel(refreshToken);
+        step("Check first registration", () ->
+                assertThat(firstRegistrationResponse.username())
+                        .isEqualTo(username));
 
-        api.auth.logout(logoutData);
+        ExistingUserResponseModel secondRegistrationResponse =
+                api.users.registerExistingUser(registrationData);
+
+        step("Check existing user error", () ->
+                assertThat(secondRegistrationResponse.username().get(0))
+                        .isEqualTo(REGISTRATION_EXISTING_USER_ERROR));
     }
 
     @Test
-    @DisplayName("Logout with blank refresh token")
-    public void blankRefreshLogoutTest() {
+    @DisplayName("Registration with blank username")
+    public void blankUsernameRegistrationTest() {
 
-        LogoutBodyModel logoutData =
-                new LogoutBodyModel("");
+        RegistrationBodyModel registrationData =
+                new RegistrationBodyModel("", password);
 
-        BlankRefreshLogoutResponseModel logoutResponse =
-                api.auth.logoutBlankRefresh(logoutData);
+        BlankUsernameRegistrationResponseModel registrationResponse =
+                api.users.registerBlankUsername(registrationData);
 
-        step("Check refresh token validation error", () ->
-                assertThat(logoutResponse.refresh().get(0))
-                        .isEqualTo(LOGOUT_BLANK_REFRESH_ERROR));
+        step("Check username validation error", () ->
+                assertThat(registrationResponse.username().get(0))
+                        .isEqualTo(REGISTRATION_BLANK_USERNAME_ERROR));
     }
 }

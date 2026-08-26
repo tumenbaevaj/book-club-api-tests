@@ -23,41 +23,43 @@ public class LogoutTests extends TestBase {
         username = "user_" + System.currentTimeMillis();
         password = "pass_" + System.currentTimeMillis();
 
-        RegistrationBodyModel registrationData = new RegistrationBodyModel(username, password);
+        RegistrationBodyModel registrationData =
+                new RegistrationBodyModel(username, password);
 
-        step("Register user", () ->
-                api.users.register(registrationData));
+        api.users.register(registrationData);
     }
 
     @Test
     @DisplayName("Successful user logout")
     public void successfulLogoutTest() {
 
-        LoginBodyModel loginData = new LoginBodyModel(username, password);
+        LoginBodyModel loginData =
+                new LoginBodyModel(username, password);
 
-        String refreshToken = step("Login user and get refresh token", () ->
-                api.auth.loginAndGetRefreshToken(loginData));
+        String refreshToken =
+                api.auth.loginAndGetRefreshToken(loginData);
 
-        LogoutBodyModel logoutData = new LogoutBodyModel(refreshToken);
+        LogoutBodyModel logoutData =
+                new LogoutBodyModel(refreshToken);
 
-        step("Logout user", () ->
-                api.auth.logout(logoutData));
+        api.auth.logout(logoutData);
     }
 
     @Test
     @DisplayName("Logout with blank refresh token")
     public void blankRefreshLogoutTest() {
 
-        LogoutBodyModel logoutData = new LogoutBodyModel("");
+        LogoutBodyModel logoutData =
+                new LogoutBodyModel("");
 
-        BlankRefreshLogoutResponseModel logoutResponse = step("Logout with blank refresh token", () ->
-                api.auth.logoutBlankRefresh(logoutData));
+        BlankRefreshLogoutResponseModel logoutResponse =
+                api.auth.logoutBlankRefresh(logoutData);
 
         step("Check refresh token validation error", () -> {
-            String expectedError = LOGOUT_BLANK_REFRESH_ERROR;
             String actualError = logoutResponse.refresh().get(0);
 
-            assertThat(actualError).isEqualTo(expectedError);
+            assertThat(actualError)
+                    .isEqualTo(LOGOUT_BLANK_REFRESH_ERROR);
         });
     }
 }
