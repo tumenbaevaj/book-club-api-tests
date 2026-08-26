@@ -2,8 +2,9 @@
 
 <p align="center">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg"
-       alt="Book Club API"
-       width="150">
+       width="50"
+       height="50"
+       title="Book Club API"/>
 </p>
 
 This project is designed to automate API testing of the **Book Club REST API** service.
@@ -136,7 +137,9 @@ Telegram notifications are configured to send test execution results and a link 
 
 An example of a successful notification with **13 of 13 API scenarios passed** is shown below:
 
-![Telegram Notification](media/telegram.jpg)
+<p align="center">
+  <img src="media/telegram.jpg" alt="Telegram Notification" width="350"/>
+</p>
 
 Due to network restrictions in the Jenkins environment, connection to the Telegram API may occasionally be unavailable.
 
