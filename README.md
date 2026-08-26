@@ -20,8 +20,8 @@ This project was developed for automated testing of the **Book Club REST API**.
 The project covers user registration, authentication and user profile management.
 Both positive and negative API scenarios are implemented.
 
-API requests are performed using REST Assured.  
-Response validation is implemented using AssertJ and JSON Schema.
+API requests are performed using **REST Assured**.  
+Response validation is implemented using **AssertJ** and **JSON Schema**.
 
 ---
 
@@ -60,6 +60,7 @@ The project includes **13 automated API tests**.
   <img src="https://cdn.simpleicons.org/jenkins" width="50" height="50" title="Jenkins"/>
   <img src="https://cdn.simpleicons.org/jira" width="50" height="50" title="Jira"/>
   <img src="https://cdn.simpleicons.org/github" width="50" height="50" title="GitHub"/>
+  <img src="https://cdn.simpleicons.org/telegram/26A5E4" width="50" height="50" title="Telegram"/>
 </p>
 
 <p align="center">
@@ -80,9 +81,9 @@ To run all API tests locally:
 
 ## Remote Test Execution in Jenkins
 
-The project is configured for automated test execution in **Jenkins**.
+The project is configured for automated API test execution in **Jenkins**.
 
-![Jenkins Build](media/jenkins.jpg)
+### [Open Jenkins Job](https://jenkins.qa.guru/job/book-club-api-tests/)
 
 The following command is used to run the tests in Jenkins:
 
@@ -90,11 +91,17 @@ The following command is used to run the tests in Jenkins:
 clean test
 ```
 
+An example of a successful Jenkins build:
+
+![Jenkins Build](media/jenkins.jpg)
+
 ---
 
-## Allure Report
+## Integrations
 
-**Allure Report** is used to visualize API test execution results.
+### Allure Report
+
+[**Allure Report**](https://jenkins.qa.guru/job/book-club-api-tests/40/allure/) is used to visualize API test execution results.
 
 The report contains:
 
@@ -108,17 +115,26 @@ The report contains:
 
 ---
 
-## Allure TestOps
+### [Allure TestOps](https://allure.qa.guru/project/5356/dashboards)
 
 The project is integrated with **Allure TestOps** for automated test case management and test execution analysis.
 
 The project contains **13 automated API test cases**.
 
+Allure TestOps is used for:
+
+- automated test case management;
+- launch history;
+- execution results;
+- test steps;
+- test automation statistics;
+- Jira integration.
+
 ![Allure TestOps](media/allure-testops.jpg)
 
 ---
 
-## Jira
+### Jira
 
 The project is integrated with **Jira** for task management and linking automated tests with project tasks.
 
@@ -130,13 +146,16 @@ The project is integrated with **Jira** for task management and linking automate
 
 ## Telegram Notifications
 
-Telegram notifications are configured for Jenkins build results.
+Telegram notifications are configured to send Jenkins test execution results and a link to the Allure Report.
 
-Due to network restrictions in the Jenkins environment, Telegram notifications may be unavailable.
+An example of a successful notification with **13 of 13 API scenarios passed** is shown below:
+
+![Telegram Notification](media/telegram.jpg)
+
+Due to network restrictions in the Jenkins environment, Telegram notifications may occasionally be unavailable.
 
 ---
 
 ## Repository
 
-GitHub repository:  
-https://github.com/tumenbaevaj/book-club-api-tests
+### [GitHub Repository](https://github.com/tumenbaevaj/book-club-api-tests)
