@@ -1,33 +1,16 @@
-<h1 align="center">Book Club API Autotests</h1>
+# API Autotests for Book Club
 
 <p align="center">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg"
-       width="90"
-       height="90"
-       title="Book Club API"/>
+       alt="Book Club API"
+       width="150">
 </p>
 
-<p align="center">
-Automated API testing project for the <b>Book Club</b> service.
-</p>
-
----
-
-## About the Project
-
-This project was developed for automated testing of the **Book Club REST API**.
-
-The project covers user registration, authentication and user profile management.
-Both positive and negative API scenarios are implemented.
-
-API requests are performed using **REST Assured**.  
-Response validation is implemented using **AssertJ** and **JSON Schema**.
-
----
+This project is designed to automate API testing of the **Book Club REST API** service.
 
 ## Test Coverage
 
-The project includes **13 automated API tests**.
+The project includes **13 automated API tests**:
 
 ### Positive Scenarios
 
@@ -48,36 +31,45 @@ The project includes **13 automated API tests**.
 12. Logout with blank refresh token
 13. User update with invalid PUT data
 
----
-
 ## Technologies
 
 <p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="50" height="50" title="Java"/>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gradle/gradle-original.svg" width="50" height="50" title="Gradle"/>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/junit/junit-original.svg" width="50" height="50" title="JUnit 5"/>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg" width="50" height="50" title="REST API"/>
-  <img src="https://cdn.simpleicons.org/jenkins" width="50" height="50" title="Jenkins"/>
-  <img src="https://cdn.simpleicons.org/jira" width="50" height="50" title="Jira"/>
-  <img src="https://cdn.simpleicons.org/github" width="50" height="50" title="GitHub"/>
-  <img src="https://cdn.simpleicons.org/telegram/26A5E4" width="50" height="50" title="Telegram"/>
+  <img width="55" title="IntelliJ IDEA" alt="IntelliJ IDEA"
+       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/intellij/intellij-original.svg">
+  <img width="55" title="Java" alt="Java"
+       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg">
+  <img width="55" title="Gradle" alt="Gradle"
+       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gradle/gradle-original.svg">
+  <img width="55" title="JUnit 5" alt="JUnit 5"
+       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/junit/junit-original.svg">
+  <img width="55" title="Swagger" alt="Swagger"
+       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-original.svg">
+  <img width="55" title="GitHub" alt="GitHub"
+       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg">
+  <img width="55" title="Jenkins" alt="Jenkins"
+       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg">
+  <img width="55" title="Jira" alt="Jira"
+       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg">
+  <img width="55" title="Telegram" alt="Telegram"
+       src="https://cdn.simpleicons.org/telegram/26A5E4">
 </p>
 
 <p align="center">
-Java • Gradle • JUnit 5 • REST Assured • AssertJ • Allure Report • Allure TestOps • JSON Schema Validation • Datafaker
+  <img src="https://img.shields.io/badge/REST_Assured-6DB33F?style=for-the-badge">
+  <img src="https://img.shields.io/badge/AssertJ-FF6F00?style=for-the-badge">
+  <img src="https://img.shields.io/badge/JSON_Schema-4B8BBE?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Allure_Report-F4A261?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Allure_TestOps-8A2BE2?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Datafaker-2E8B57?style=for-the-badge">
 </p>
-
----
 
 ## Running the Tests
 
-To run all API tests locally:
+The following command is used to run the tests locally:
 
 ```bash
 ./gradlew clean test
 ```
-
----
 
 ## Remote Test Execution in Jenkins
 
@@ -95,13 +87,11 @@ An example of a successful Jenkins build:
 
 ![Jenkins Build](media/jenkins.jpg)
 
----
-
 ## Integrations
 
-### Allure Report
+### [Allure Report](https://jenkins.qa.guru/job/book-club-api-tests/40/allure/)
 
-[**Allure Report**](https://jenkins.qa.guru/job/book-club-api-tests/40/allure/) is used to visualize API test execution results.
+Allure Report is used to visualize API test execution results.
 
 The report contains:
 
@@ -113,13 +103,9 @@ The report contains:
 
 ![Allure Report](media/allure-report.jpg)
 
----
-
 ### [Allure TestOps](https://allure.qa.guru/project/5356/dashboards)
 
-The project is integrated with **Allure TestOps** for automated test case management and test execution analysis.
-
-The project contains **13 automated API test cases**.
+Test execution results are sent from Jenkins to **Allure TestOps**.
 
 Allure TestOps is used for:
 
@@ -130,31 +116,29 @@ Allure TestOps is used for:
 - test automation statistics;
 - Jira integration.
 
+The project contains **13 automated API test cases**.
+
 ![Allure TestOps](media/allure-testops.jpg)
 
----
+### [Jira](https://jira.qa.guru/browse/MUL-42)
 
-### Jira
+The following Jira issue was created for the project:
 
-The project is integrated with **Jira** for task management and linking automated tests with project tasks.
+**MUL-42 — API autotests for Book Club service**
 
-**Jira task:** [MUL-42 — API autotests for Book Club service](https://jira.qa.guru/browse/MUL-42)
+The Jira issue describes the API automation project and its integrations with Jenkins, Allure Report and Allure TestOps.
 
-![Jira](media/jira.jpg)
-
----
+![Jira Integration](media/jira.jpg)
 
 ## Telegram Notifications
 
-Telegram notifications are configured to send Jenkins test execution results and a link to the Allure Report.
+Telegram notifications are configured to send test execution results and a link to the Allure Report after the Jenkins build.
 
 An example of a successful notification with **13 of 13 API scenarios passed** is shown below:
 
 ![Telegram Notification](media/telegram.jpg)
 
-Due to network restrictions in the Jenkins environment, Telegram notifications may occasionally be unavailable.
-
----
+Due to network restrictions in the Jenkins environment, connection to the Telegram API may occasionally be unavailable.
 
 ## Repository
 
