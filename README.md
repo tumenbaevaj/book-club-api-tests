@@ -150,6 +150,8 @@ The report contains:
 
 ### [Allure TestOps](https://allure.qa.guru/project/5356/dashboards)
 
+Test execution results are sent from Jenkins to **Allure TestOps**, and the Jenkins job can also be launched directly from Allure TestOps.
+
 Allure TestOps is used for:
 
 - automated test case management;
