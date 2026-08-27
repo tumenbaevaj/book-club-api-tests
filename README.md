@@ -1,10 +1,12 @@
 # API Autotests for Book Club
 
 <p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg"
-       width="50"
-       height="50"
-       title="Book Club API"/>
+  <a href="https://swagger.io/">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg"
+         width="50"
+         height="50"
+         title="Book Club API"/>
+  </a>
 </p>
 
 This project is designed to automate API testing of the **Book Club REST API** service.
@@ -35,33 +37,75 @@ The project includes **13 automated API tests**:
 ## Technologies
 
 <p align="center">
-  <img width="55" title="IntelliJ IDEA" alt="IntelliJ IDEA"
-       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/intellij/intellij-original.svg">
-  <img width="55" title="Java" alt="Java"
-       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg">
-  <img width="55" title="Gradle" alt="Gradle"
-       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gradle/gradle-original.svg">
-  <img width="55" title="JUnit 5" alt="JUnit 5"
-       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/junit/junit-original.svg">
-  <img width="55" title="Swagger" alt="Swagger"
-       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-original.svg">
-  <img width="55" title="GitHub" alt="GitHub"
-       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg">
-  <img width="55" title="Jenkins" alt="Jenkins"
-       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg">
-  <img width="55" title="Jira" alt="Jira"
-       src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg">
-  <img width="55" title="Telegram" alt="Telegram"
-       src="https://cdn.simpleicons.org/telegram/26A5E4">
+
+  <a href="https://www.jetbrains.com/idea/">
+    <img width="55" title="IntelliJ IDEA" alt="IntelliJ IDEA"
+         src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/intellij/intellij-original.svg">
+  </a>
+
+  <a href="https://www.java.com/">
+    <img width="55" title="Java" alt="Java"
+         src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg">
+  </a>
+
+  <a href="https://gradle.org/">
+    <img width="55" title="Gradle" alt="Gradle"
+         src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gradle/gradle-original.svg">
+  </a>
+
+  <a href="https://junit.org/junit5/">
+    <img width="55" title="JUnit 5" alt="JUnit 5"
+         src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/junit/junit-original.svg">
+  </a>
+
+  <a href="https://github.com/">
+    <img width="55" title="GitHub" alt="GitHub"
+         src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg">
+  </a>
+
+  <a href="https://www.jenkins.io/">
+    <img width="55" title="Jenkins" alt="Jenkins"
+         src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg">
+  </a>
+
+  <a href="https://www.atlassian.com/software/jira">
+    <img width="55" title="Jira" alt="Jira"
+         src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg">
+  </a>
+
+  <a href="https://telegram.org/">
+    <img width="55" title="Telegram" alt="Telegram"
+         src="https://cdn.simpleicons.org/telegram/26A5E4">
+  </a>
+
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/REST_Assured-6DB33F?style=for-the-badge">
-  <img src="https://img.shields.io/badge/AssertJ-FF6F00?style=for-the-badge">
-  <img src="https://img.shields.io/badge/JSON_Schema-4B8BBE?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Allure_Report-F4A261?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Allure_TestOps-8A2BE2?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Datafaker-2E8B57?style=for-the-badge">
+
+  <a href="https://rest-assured.io/">
+    <img src="https://img.shields.io/badge/REST_Assured-6DB33F?style=for-the-badge">
+  </a>
+
+  <a href="https://assertj.github.io/doc/">
+    <img src="https://img.shields.io/badge/AssertJ-FF6F00?style=for-the-badge">
+  </a>
+
+  <a href="https://www.datafaker.net/">
+    <img src="https://img.shields.io/badge/Datafaker-6A5ACD?style=for-the-badge">
+  </a>
+
+  <a href="https://json-schema.org/">
+    <img src="https://img.shields.io/badge/JSON_Schema-000000?style=for-the-badge">
+  </a>
+
+  <a href="https://allurereport.org/">
+    <img src="https://img.shields.io/badge/Allure_Report-F4A261?style=for-the-badge">
+  </a>
+
+  <a href="https://qameta.io/allure-testops/">
+    <img src="https://img.shields.io/badge/Allure_TestOps-8A2BE2?style=for-the-badge">
+  </a>
+
 </p>
 
 ## Running the Tests
@@ -106,7 +150,7 @@ The report contains:
 
 ### [Allure TestOps](https://allure.qa.guru/project/5356/dashboards)
 
-Test execution results are sent from Jenkins to **Allure TestOps**.
+Test execution results are sent from Jenkins to **Allure TestOps**, and the Jenkins job can also be launched directly from Allure TestOps.
 
 Allure TestOps is used for:
 
@@ -140,8 +184,6 @@ An example of a successful notification with **13 of 13 API scenarios passed** i
 <p align="center">
   <img src="media/telegram.jpg" alt="Telegram Notification" width="350"/>
 </p>
-
-Due to network restrictions in the Jenkins environment, connection to the Telegram API may occasionally be unavailable.
 
 ## Repository
 
